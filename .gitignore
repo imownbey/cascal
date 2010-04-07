@@ -3,3 +3,6 @@ target/
 cascal.iml
 cassandra.home.unit-tests/
 out/
+project/boot
+lib
+lib_managed/

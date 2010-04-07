@@ -132,23 +132,22 @@
 
     <repositories>
         <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-snapshots/</url>
-        </repository>
-
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases/</url>
-        </repository>
-
-        <repository>
             <id>shorrockin.com</id>
             <name>Shorrockin Repository</name>
             <url>http://maven.shorrockin.com/</url>
         </repository>
 
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala-Tools Maven2 Snapshot Repository</name>
+            <url>http://scala-tools.org/repo-snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>scala-tools.org</id>
+            <name>Scala-Tools Maven2 Release Repository</name>
+            <url>http://scala-tools.org/repo-releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -214,6 +213,13 @@
             <version>4.6</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.scala-tools.testing</groupId>
+            <artifactId>specs</artifactId>
+            <version>1.6.2.1</version>
+            <scope>test</scope>
+        </dependency>        
 
         <dependency>
             <groupId>commons-lang</groupId>
