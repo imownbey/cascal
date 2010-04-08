@@ -58,7 +58,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- no luck <vscaladocVersion>1.1</vscaladocVersion> --> 
+                    <!-- no luck <vscaladocVersion>1.1</vscaladocVersion> -->
                     <scalaVersion>${scala.version}</scalaVersion>
                     <args>
                         <arg>-target:jvm-${java.compile.version}</arg>
@@ -91,6 +91,19 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!-- <version>2.4.3</version> -->
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <argLine>-Xmx512m</argLine>
+                    <includes>
+                        <include>**/*Spec.java</include>
+                    </includes>
+                </configuration>
             </plugin>
 
             <!-- attaches the javadocs to the build artifact -->
@@ -136,13 +149,13 @@
             <name>Shorrockin Repository</name>
             <url>http://maven.shorrockin.com/</url>
         </repository>
-
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Snapshot Repository</name>
-            <url>http://scala-tools.org/repo-snapshots/</url>
-        </repository>
-
+        <!--
+                <repository>
+                    <id>scala-tools.org</id>
+                    <name>Scala-Tools Maven2 Snapshot Repository</name>
+                    <url>http://scala-tools.org/repo-snapshots/</url>
+                </repository>
+        -->
         <repository>
             <id>scala-tools.org</id>
             <name>Scala-Tools Maven2 Release Repository</name>
@@ -215,11 +228,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.scala-tools.testing</groupId>
             <artifactId>specs</artifactId>
             <version>1.6.2.1</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>

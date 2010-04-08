@@ -4,12 +4,13 @@ import model.{SuperKey, StandardKey, Key}
 import org.junit.{Assert, Test}
 import session.{Session, ColumnPredicate, Order, RangePredicate}
 import utils.{UUID, Conversions}
+import org.scalatest.junit.JUnitSuite
 
 /**
  * tests our ability to list multiple keys, translates to a cassandra
  * multiget_slice
  */
-class TestMultiKeyList extends CassandraTestPool {
+class TestMultiKeyList extends JUnitSuite with CassandraTestPool {
   import Assert._
   import Conversions._
 

@@ -5,8 +5,9 @@ import org.junit.{Assert, Test}
 import java.util.Date
 import session.{ColumnPredicate, RangePredicate}
 import utils.{Conversions, Logging}
+import org.scalatest.junit.JUnitSuite
 
-class TestStandardInesrtAndList extends CassandraTestPool with Logging {
+class TestStandardInesrtAndList extends JUnitSuite with CassandraTestPool with Logging {
   import Assert._
   import Conversions._
 

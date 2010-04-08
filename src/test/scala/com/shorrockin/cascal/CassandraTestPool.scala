@@ -14,7 +14,7 @@ import utils.{Utils, Logging}
 trait CassandraTestPool extends Logging {
   def borrow(f:(Session) => Unit) = {
     EmbeddedTestCassandra.init
-    EmbeddedTestCassandra.pool.borrow(f)
+    EmbeddedTestCassandra.pool.get.borrow(f)
   }
 }
 
@@ -27,9 +27,21 @@ object EmbeddedTestCassandra extends Logging {
 
   val hosts  = Host("localhost", 9160, 250) :: Nil
   val params = new PoolParams(10, ExhaustionPolicy.Fail, 500L, 6, 2)
-  lazy val pool = new SessionPool(hosts, params, Consistency.One)
+  
+  var daemon:Option[CassandraDaemonThread] = None
+  var pool:Option[SessionPool] = None
 
-  def init = synchronized {
+  def close() = synchronized {
+    pool.foreach { _.close }
+    daemon.foreach { _.close }
+    initialized = false
+  }
+
+  def borrow(f:(Session) => Unit) = {
+    pool.foreach { _.borrow(f) }
+  }
+
+  def init() = synchronized {
     if (!initialized) {
       val homeDirectory = new File("target/cassandra.home.unit-tests")
       delete(homeDirectory)
@@ -51,17 +63,21 @@ object EmbeddedTestCassandra extends Logging {
       DatabaseDescriptor.getAllDataFileLocations.foreach { (file) => new File(file).mkdirs }
       new File(DatabaseDescriptor.getLogFileLocation).mkdirs
 
-      val daemon = new CassandraDaemonThread
-      daemon.start
+      val thread = new CassandraDaemonThread
+      thread.start
 
       // try to make sockets until the server opens up - there has to be a better
       // way - just not sure what it is.
       val socket = new TSocket("localhost", 9160);
       var opened = false
-      while (!opened) {
+
+      log.debug("waiting for confirmation of cassandra open for business")
+
+      while (!opened) {  
         try {
           socket.open()
           opened = true
+          log.debug("cassandra db confirmed open")
           socket.close()
         } catch {
           case e:TTransportException => /* ignore */
@@ -70,6 +86,8 @@ object EmbeddedTestCassandra extends Logging {
       }
 
       initialized = true
+      daemon = Some(thread)
+      pool = Some(new SessionPool(hosts, params, Consistency.One))
     }
   }
 
@@ -83,14 +101,6 @@ class CassandraDaemonThread extends Thread("CassandraDaemonThread") with Logging
   private val daemon = new CassandraDaemon
 
   setDaemon(true)
-
-  /**
-   * starts the server and blocks until it has
-   * completed booting up.
-   */
-  def startServer = {
-
-  }
 
   override def run:Unit = {
     log.debug("initializing cassandra daemon")

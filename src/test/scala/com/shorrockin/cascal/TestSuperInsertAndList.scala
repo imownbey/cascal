@@ -3,8 +3,9 @@ package com.shorrockin.cascal
 import model.{Column, SuperColumn}
 import org.junit.{Test, Assert}
 import utils.{UUID, Conversions, Logging}
+import org.scalatest.junit.JUnitSuite
 
-class TestSuperInsertAndList extends CassandraTestPool with Logging {
+class TestSuperInsertAndList extends JUnitSuite with CassandraTestPool with Logging {
   import Assert._
   import Conversions._
 

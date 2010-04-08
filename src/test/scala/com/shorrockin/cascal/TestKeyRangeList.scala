@@ -4,8 +4,9 @@ import model.{ColumnFamily, Key, StandardKey}
 import org.junit.{Assert, Test}
 import session.{Consistency, EmptyPredicate, KeyRange}
 import utils.Conversions
+import org.scalatest.junit.JUnitSuite
 
-class TestKeyRangeList extends CassandraTestPool {
+class TestKeyRangeList extends JUnitSuite with CassandraTestPool {
   import Assert._
   import Conversions._
 

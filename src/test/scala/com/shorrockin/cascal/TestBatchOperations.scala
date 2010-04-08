@@ -4,8 +4,9 @@ import model.Column
 import org.junit.{Assert, Test}
 import session.{ColumnPredicate, Delete, Insert}
 import utils.{UUID, Conversions}
+import org.scalatest.junit.JUnitSuite
 
-class TestBatchOperations extends CassandraTestPool {
+class TestBatchOperations extends JUnitSuite with CassandraTestPool {
   import Conversions._
   import Assert._
 

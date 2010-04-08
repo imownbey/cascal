@@ -1,11 +1,12 @@
 package com.shorrockin.cascal
 
 import org.junit.{Assert, Test}
+import org.scalatest.junit.JUnitSuite
 
 /**
  * really simple test to ensure that basic path composition works
  */
-class TestPathComposition {
+class TestPathComposition extends JUnitSuite {
   import com.shorrockin.cascal.utils.Conversions._
   import Assert._
 

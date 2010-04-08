@@ -6,5 +6,5 @@ class CascalProject(info:ProjectInfo) extends DefaultProject(info) {
   /**
    * any class ending with Spec or Unit will be picked up and ran by sbt
    */
-  override def includeTest(s: String) = { s.endsWith("Spec") || s.endsWith("Unit") || s.startsWith("Test") }
+  //override def includeTest(s: String) = { s.endsWith("Spec") || s.endsWith("Unit") || s.startsWith("Test") }
 }

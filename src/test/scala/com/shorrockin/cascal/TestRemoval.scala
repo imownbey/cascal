@@ -2,11 +2,12 @@ package com.shorrockin.cascal
 
 import org.junit.{Assert, Test}
 import com.shorrockin.cascal.utils.UUID
+import org.scalatest.junit.JUnitSuite
 
 /**
  * tests session removal
  */
-class TestRemoval extends CassandraTestPool {
+class TestRemoval extends JUnitSuite with CassandraTestPool {
   import com.shorrockin.cascal.utils.Conversions._
   import Assert._
 
